@@ -33,6 +33,7 @@ def read_csv(path):
 def find_download(url, selector="#holdings > div.holdings.fund-component-data-export > a.icon-xls-export"):
     req = requests.get(url)
     soup = BeautifulSoup(req.content, "html.parser")
+    print(soup)
     suburl = soup.select(selector)[0].get("href")
 
     # set filename
