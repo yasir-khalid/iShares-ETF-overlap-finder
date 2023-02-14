@@ -30,12 +30,13 @@ def read_csv(path):
     return df
 
 
-def find_download(url, selector="#holdings > div.holdings.fund-component-data-export > a.icon-xls-export"):
-    req = requests.get(url)
-    soup = BeautifulSoup(req.content, "html.parser")
-    print(soup)
-    suburl = soup.select(selector)[0].get("href")
+def find_download(url, selector="#holdings > div.holdings.fund-component-data-export > a.icon-xls-export"): 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
 
+    csv_link = soup.find("a", text="Detailed Holdings and Analytics")
+    suburl = "https://www.ishares.com" + csv_link["href"]
+    
     # set filename
     search = "fileName=[a-zA-Z]*"
     x = re.findall(search, suburl)
